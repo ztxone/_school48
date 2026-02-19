@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ALBUM_OPTIONS } from '../../../../shared/album-options'
+import { ALBUM_OPTIONS } from '~~/shared/album-options'
 
 defineProps<{
   albumFormatKey: string

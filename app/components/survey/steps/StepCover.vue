@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { COVER_OPTIONS } from '../../../../shared/covers'
+import { COVER_OPTIONS } from '~~/shared/covers'
 
 defineProps<{
   coverId: string

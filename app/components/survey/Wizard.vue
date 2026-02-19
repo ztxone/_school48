@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { CreateApplicationInput } from '../../../shared/schemas'
-import { ALBUM_OPTIONS } from '../../../shared/album-options'
-import { COVER_OPTIONS } from '../../../shared/covers'
+import type { CreateApplicationInput } from '~~/shared/schemas'
+import { ALBUM_OPTIONS } from '~~/shared/album-options'
+import { COVER_OPTIONS } from '~~/shared/covers'
 
 type Student = {
   id: number
@@ -232,13 +232,7 @@ async function submit() {
       </div>
     </template>
   </UCard>
-
-  <UModal
-    v-model:open="statusModalOpen"
-    :title="statusTitle"
-    :description="statusDescription"
-    :close="false"
-    :dismissible="false">
+  <UModal v-model:open="statusModalOpen" :title="statusTitle" :description="statusDescription" :close="false" :dismissible="false">
     <template #footer>
       <div class="flex justify-end">
         <UButton

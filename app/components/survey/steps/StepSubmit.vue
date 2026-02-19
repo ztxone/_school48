@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ALBUM_OPTIONS } from '../../../../shared/album-options'
-import { COVER_OPTIONS } from '../../../../shared/covers'
+import { ALBUM_OPTIONS } from '~~/shared/album-options'
+import { COVER_OPTIONS } from '~~/shared/covers'
 
 const props = defineProps<{
   state: {
