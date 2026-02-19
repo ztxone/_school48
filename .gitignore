@@ -23,3 +23,7 @@ logs
 .env.*
 !.env.example
 _school48.code-workspace
+
+# Runtime files
+data
+public/uploads/payments

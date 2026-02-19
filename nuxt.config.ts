@@ -12,6 +12,19 @@ export default defineNuxtConfig({
   },
 
   css: ['~/assets/css/main.css'],
+  ui: {
+    colorMode: false
+  },
+
+  runtimeConfig: {
+    adminEmail: process.env.NUXT_ADMIN_EMAIL || '',
+    adminPassword: process.env.NUXT_ADMIN_PASSWORD || '',
+    dbFilePath: process.env.NUXT_DB_FILE_PATH || './data/app.db',
+    sessionMaxAgeSeconds: process.env.NUXT_SESSION_MAX_AGE_SECONDS || '604800',
+    public: {
+      appName: 'Школьный фотоальбом'
+    }
+  },
 
   routeRules: {
     '/': { prerender: true }
