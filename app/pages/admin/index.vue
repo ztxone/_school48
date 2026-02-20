@@ -10,6 +10,7 @@ type ApplicationItem = {
   id: number
   studentFirstName: string
   studentLastName: string
+  coverId: string
   albumFormatTitle: string
   totalPriceRub: number
   paymentStatus: 'pending' | 'paid'
@@ -19,6 +20,8 @@ type ApplicationItem = {
 type ApplicationRow = {
   id: number
   student: string
+  coverId: string
+  coverSort: number
   album: string
   price: string
   paymentStatus: 'pending' | 'paid'
@@ -42,6 +45,8 @@ const rows = computed<ApplicationRow[]>(() => {
   return (data.value?.items || []).map(item => ({
     id: item.id,
     student: `${item.studentLastName} ${item.studentFirstName}`,
+    coverId: item.coverId,
+    coverSort: Number.parseInt(item.coverId, 10) || 0,
     album: item.albumFormatTitle,
     price: `${item.totalPriceRub.toLocaleString('ru-RU')} ₽`,
     paymentStatus: item.paymentStatus,
@@ -53,6 +58,7 @@ const rows = computed<ApplicationRow[]>(() => {
 const columns: TableColumn<ApplicationRow>[] = [
   { accessorKey: 'id', header: 'ID' },
   { accessorKey: 'student', header: 'Ученик' },
+  { accessorKey: 'coverSort', header: 'Обложка' },
   { accessorKey: 'album', header: 'Формат' },
   { accessorKey: 'price', header: 'Стоимость', enableSorting: false },
   { accessorKey: 'paymentStatus', header: 'Оплата' },
@@ -168,6 +174,14 @@ async function confirmRemoveApplication() {
           :icon="getSortIcon(column)"
           @click="column.toggleSorting(column.getIsSorted() === 'asc')"> Формат </UButton>
       </template>
+      <template #coverSort-header="{ column }">
+        <UButton
+          variant="ghost"
+          color="neutral"
+          size="xs"
+          :icon="getSortIcon(column)"
+          @click="column.toggleSorting(column.getIsSorted() === 'asc')"> Обложка </UButton>
+      </template>
       <template #price-header="{ column }">
         <UButton
           variant="ghost"
@@ -223,6 +237,15 @@ async function confirmRemoveApplication() {
       </template>
       <template #createdAt-cell="{ row }">
         {{ new Date(row.original.createdAt).toLocaleString('ru-RU') }}
+      </template>
+      <template #coverSort-cell="{ row }">
+        <div class="flex items-center gap-2">
+          <img
+            :src="`/Обложка_${row.original.coverId}.jpeg`"
+            :alt="`Обложка ${row.original.coverId}`"
+            class="h-10 w-8 rounded object-cover border border-default">
+          <span>№{{ row.original.coverId }}</span>
+        </div>
       </template>
     </UTable>
 
