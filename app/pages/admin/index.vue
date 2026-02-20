@@ -14,6 +14,7 @@ type ApplicationItem = {
   albumFormatTitle: string
   totalPriceRub: number
   paymentStatus: 'pending' | 'paid'
+  paidAt: number | null
   createdAt: number
 }
 
@@ -25,6 +26,7 @@ type ApplicationRow = {
   album: string
   price: string
   paymentStatus: 'pending' | 'paid'
+  paidAt: number | null
   createdAt: number
   actions: number
 }
@@ -50,6 +52,7 @@ const rows = computed<ApplicationRow[]>(() => {
     album: item.albumFormatTitle,
     price: `${item.totalPriceRub.toLocaleString('ru-RU')} ₽`,
     paymentStatus: item.paymentStatus,
+    paidAt: item.paidAt,
     createdAt: item.createdAt,
     actions: item.id
   }))
@@ -62,6 +65,7 @@ const columns: TableColumn<ApplicationRow>[] = [
   { accessorKey: 'album', header: 'Формат' },
   { accessorKey: 'price', header: 'Стоимость', enableSorting: false },
   { accessorKey: 'paymentStatus', header: 'Оплата' },
+  { accessorKey: 'paidAt', header: 'Дата оплаты' },
   { accessorKey: 'createdAt', header: 'Дата' },
   { accessorKey: 'actions', header: 'Действия' }
 ]
@@ -119,7 +123,7 @@ async function confirmRemoveApplication() {
 }
 </script>
 <template>
-  <UContainer class="py-8 space-y-6 bg-white/95">
+  <UContainer class="min-w-full py-8 space-y-6 bg-white/95">
     <div class="flex items-center justify-between gap-4">
       <h1 class="text-2xl font-semibold"> Заявки учеников </h1>
       <UButton
@@ -202,7 +206,15 @@ async function confirmRemoveApplication() {
           color="neutral"
           size="xs"
           :icon="getSortIcon(column)"
-          @click="column.toggleSorting(column.getIsSorted() === 'asc')"> Дата </UButton>
+          @click="column.toggleSorting(column.getIsSorted() === 'asc')"> Дата заявки </UButton>
+      </template>
+      <template #paidAt-header="{ column }">
+        <UButton
+          variant="ghost"
+          color="neutral"
+          size="xs"
+          :icon="getSortIcon(column)"
+          @click="column.toggleSorting(column.getIsSorted() === 'asc')"> Дата оплаты </UButton>
       </template>
       <template #actions-header="{ column }">
         <UButton
@@ -238,6 +250,12 @@ async function confirmRemoveApplication() {
       <template #createdAt-cell="{ row }">
         {{ new Date(row.original.createdAt).toLocaleString('ru-RU') }}
       </template>
+      <template #paidAt-cell="{ row }">
+        <span v-if="row.original.paidAt">
+          {{ new Date(row.original.paidAt).toLocaleString('ru-RU') }}
+        </span>
+        <span v-else class="text-muted"> — </span>
+      </template>
       <template #coverSort-cell="{ row }">
         <div class="flex items-center gap-2">
           <img
@@ -248,25 +266,17 @@ async function confirmRemoveApplication() {
         </div>
       </template>
     </UTable>
-
-    <UModal
-      v-model:open="confirmDeleteOpen"
-      title="Подтверждение удаления"
-      :description="`Удалить заявку ученика: ${pendingDeleteLabel}?`">
+    <UModal v-model:open="confirmDeleteOpen" title="Подтверждение удаления" :description="`Удалить заявку ученика: ${pendingDeleteLabel}?`">
       <template #footer>
         <div class="flex justify-end gap-2">
           <UButton
             color="neutral"
             variant="soft"
-            @click="confirmDeleteOpen = false">
-            Отмена
-          </UButton>
+            @click="confirmDeleteOpen = false"> Отмена </UButton>
           <UButton
             color="error"
             :loading="deletingId !== null"
-            @click="confirmRemoveApplication">
-            Удалить
-          </UButton>
+            @click="confirmRemoveApplication"> Удалить </UButton>
         </div>
       </template>
     </UModal>

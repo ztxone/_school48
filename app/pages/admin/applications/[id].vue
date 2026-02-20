@@ -11,8 +11,7 @@ const { data, pending, refresh } = await useFetch(`/api/admin/applications/${app
 const paymentState = reactive({
   paymentStatus: 'pending',
   note: '',
-  imagePath: null as string | null,
-  paidAt: null as number | null
+  imagePath: null as string | null
 })
 
 watchEffect(() => {
@@ -23,7 +22,6 @@ watchEffect(() => {
   paymentState.paymentStatus = data.value.paymentStatus || 'pending'
   paymentState.note = data.value.paymentNote || ''
   paymentState.imagePath = data.value.paymentImagePath || null
-  paymentState.paidAt = data.value.paidAt || null
 })
 
 const saveLoading = ref(false)
@@ -110,6 +108,9 @@ async function savePayment() {
           <UFormField label="Фото оплаты">
             <input type="file" accept="image/jpeg,image/png,image/webp" @change="onFileChange">
           </UFormField>
+          <p class="text-sm text-muted">
+            Дата оплаты: {{ data.paidAt ? new Date(data.paidAt).toLocaleString('ru-RU') : '—' }}
+          </p>
           <img v-if="paymentState.imagePath" :src="paymentState.imagePath" alt="Чек оплаты" class="rounded-md max-h-52 object-contain bg-neutral-50 dark:bg-neutral-900">
           <UButton :loading="saveLoading" @click="savePayment"> Сохранить </UButton>
           <UAlert v-if="saveMessage" color="success" variant="subtle" :title="saveMessage" />

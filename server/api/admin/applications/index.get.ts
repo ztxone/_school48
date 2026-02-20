@@ -16,6 +16,7 @@ export default defineEventHandler(async (event) => {
     albumFormatTitle: applications.albumFormatTitle,
     totalPriceRub: applications.totalPriceRub,
     paymentStatus: applications.paymentStatus,
+    paidAt: paymentProofs.paidAt,
     createdAt: applications.createdAt,
     paymentImagePath: paymentProofs.imagePath
   }
