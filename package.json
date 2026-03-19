@@ -14,6 +14,7 @@
     "db:seed": "node --env-file=.env --import tsx server/db/seed.ts"
   },
   "dependencies": {
+    "@fancyapps/ui": "^6.1.13",
     "@iconify-json/lucide": "^1.2.90",
     "@iconify-json/simple-icons": "^1.2.70",
     "@nuxt/image": "2.0.0",

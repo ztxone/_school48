@@ -1,6 +1,7 @@
-import { desc, eq, like, or } from 'drizzle-orm'
+import { desc, eq, inArray, like, or } from 'drizzle-orm'
+import { normalizeLastName } from '../../../../shared/photo-selection'
 import { db } from '../../../db'
-import { applications, paymentProofs } from '../../../db/schema'
+import { applications, paymentProofs, photoSelections } from '../../../db/schema'
 import { requireAdmin } from '../../../utils/admin-auth'
 
 export default defineEventHandler(async (event) => {
@@ -41,5 +42,37 @@ export default defineEventHandler(async (event) => {
       .orderBy(desc(applications.createdAt))
   }
 
-  return { items: rows }
+  const normalizedLastNames = [...new Set(rows.map(item => normalizeLastName(item.studentLastName)).filter(Boolean))]
+  const selectionRows = normalizedLastNames.length
+    ? await db
+      .select({
+        normalizedLastName: photoSelections.normalizedLastName,
+        coverPhoto: photoSelections.coverPhoto,
+        vignettePhoto: photoSelections.vignettePhoto
+      })
+      .from(photoSelections)
+      .where(inArray(photoSelections.normalizedLastName, normalizedLastNames))
+    : []
+
+  const selectionMap = new Map(
+    selectionRows.map(item => [
+      item.normalizedLastName,
+      {
+        coverPhoto: item.coverPhoto,
+        vignettePhoto: item.vignettePhoto
+      }
+    ])
+  )
+
+  return {
+    items: rows.map(item => {
+      const selection = selectionMap.get(normalizeLastName(item.studentLastName))
+
+      return {
+        ...item,
+        coverPhoto: selection?.coverPhoto || null,
+        vignettePhoto: selection?.vignettePhoto || null
+      }
+    })
+  }
 })

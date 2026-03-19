@@ -96,6 +96,10 @@ async function savePayment() {
           <p><span class="text-muted">Формат:</span> {{ data.albumFormatTitle }}</p>
           <p><span class="text-muted">Стоимость:</span> {{ data.totalPriceRub.toLocaleString('ru-RU') }} ₽</p>
           <p><span class="text-muted">Комментарий:</span> {{ data.comment || '—' }}</p>
+          <p>
+            <span class="text-muted">Выбор фото:</span>
+            {{ data.coverPhoto && data.vignettePhoto ? `обложка: ${data.coverPhoto}, виньетка: ${data.vignettePhoto}` : '—' }}
+          </p>
           <img :src="`/Обложка_${data.coverId}.jpeg`" :alt="`Обложка ${data.coverId}`" class="rounded-md max-h-64 object-cover">
         </div>
         <div class="space-y-4">

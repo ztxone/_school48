@@ -1,6 +1,7 @@
 import { eq } from 'drizzle-orm'
+import { normalizeLastName } from '../../../../shared/photo-selection'
 import { db } from '../../../db'
-import { applications, paymentProofs } from '../../../db/schema'
+import { applications, paymentProofs, photoSelections } from '../../../db/schema'
 import { requireAdmin } from '../../../utils/admin-auth'
 
 export default defineEventHandler(async (event) => {
@@ -36,5 +37,19 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 404, statusMessage: 'Заявка не найдена' })
   }
 
-  return rows[0]
+  const application = rows[0]
+  const selection = await db
+    .select({
+      coverPhoto: photoSelections.coverPhoto,
+      vignettePhoto: photoSelections.vignettePhoto
+    })
+    .from(photoSelections)
+    .where(eq(photoSelections.normalizedLastName, normalizeLastName(application.studentLastName)))
+    .limit(1)
+
+  return {
+    ...application,
+    coverPhoto: selection[0]?.coverPhoto || null,
+    vignettePhoto: selection[0]?.vignettePhoto || null
+  }
 })

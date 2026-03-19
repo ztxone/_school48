@@ -1,5 +1,6 @@
 import { and, eq } from 'drizzle-orm'
 import { db } from '.'
+import { syncStudentPhotoOptionsFromFolders } from '../utils/photo-options'
 import { admins, students } from './schema'
 import { hashPassword } from '../utils/password'
 
@@ -52,6 +53,7 @@ async function seedAdmin() {
 
 async function run() {
   await seedStudents()
+  await syncStudentPhotoOptionsFromFolders()
   await seedAdmin()
 
   console.log('Seed completed')

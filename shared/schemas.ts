@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { ALBUM_OPTIONS } from './album-options'
 import { COVER_OPTIONS } from './covers'
+import { normalizeLastName } from './photo-selection'
 
 const albumKeys = ALBUM_OPTIONS.map(option => option.key)
 const coverIds = COVER_OPTIONS.map(cover => cover.id)
@@ -15,6 +16,32 @@ export const createApplicationSchema = z.object({
 })
 
 export type CreateApplicationInput = z.infer<typeof createApplicationSchema>
+
+const photoFileNameSchema = z
+  .string()
+  .trim()
+  .regex(/^[^/\\]+\.(jpg|jpeg|png|webp)$/i, 'Укажите корректное имя файла')
+
+export const surveyTwoLookupSchema = z.object({
+  lastName: z.string().trim().min(2, 'Введите фамилию')
+})
+
+export const surveyTwoSubmitSchema = z.object({
+  lastName: z.string().trim().min(2, 'Введите фамилию'),
+  coverPhoto: photoFileNameSchema,
+  vignettePhoto: photoFileNameSchema
+}).superRefine((value, ctx) => {
+  if (!normalizeLastName(value.lastName)) {
+    ctx.addIssue({
+      code: 'custom',
+      path: ['lastName'],
+      message: 'Введите фамилию'
+    })
+  }
+})
+
+export type SurveyTwoLookupInput = z.infer<typeof surveyTwoLookupSchema>
+export type SurveyTwoSubmitInput = z.infer<typeof surveyTwoSubmitSchema>
 
 export const adminLoginSchema = z.object({
   email: z.string().email('Введите корректный email'),

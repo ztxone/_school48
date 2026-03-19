@@ -49,6 +49,37 @@ export const applications = sqliteTable('applications', {
   updatedAt: integer('updated_at').notNull()
 })
 
+export const studentPhotoOptions = sqliteTable(
+  'student_photo_options',
+  {
+    id: integer('id').primaryKey({ autoIncrement: true }),
+    lastName: text('last_name').notNull(),
+    normalizedLastName: text('normalized_last_name').notNull(),
+    fileName: text('file_name').notNull(),
+    imagePath: text('image_path').notNull(),
+    createdAt: integer('created_at').notNull()
+  },
+  table => [
+    uniqueIndex('student_photo_options_unique_file').on(table.normalizedLastName, table.fileName)
+  ]
+)
+
+export const photoSelections = sqliteTable(
+  'photo_selections',
+  {
+    id: integer('id').primaryKey({ autoIncrement: true }),
+    lastName: text('last_name').notNull(),
+    normalizedLastName: text('normalized_last_name').notNull(),
+    coverPhoto: text('cover_photo').notNull(),
+    vignettePhoto: text('vignette_photo').notNull(),
+    createdAt: integer('created_at').notNull(),
+    updatedAt: integer('updated_at').notNull()
+  },
+  table => [
+    uniqueIndex('photo_selections_unique_last_name').on(table.normalizedLastName)
+  ]
+)
+
 export const paymentProofs = sqliteTable('payment_proofs', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   applicationId: integer('application_id')
