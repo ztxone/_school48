@@ -15,25 +15,25 @@
   },
   "dependencies": {
     "@fancyapps/ui": "^6.1.13",
-    "@iconify-json/lucide": "^1.2.90",
-    "@iconify-json/simple-icons": "^1.2.70",
+    "@iconify-json/lucide": "^1.2.98",
+    "@iconify-json/simple-icons": "^1.2.74",
     "@nuxt/image": "2.0.0",
     "@nuxt/scripts": "0.13.2",
-    "@nuxt/ui": "^4.4.0",
-    "better-auth": "^1.4.18",
-    "better-sqlite3": "^12.6.2",
+    "@nuxt/ui": "^4.5.1",
+    "better-auth": "^1.5.5",
+    "better-sqlite3": "^12.8.0",
     "drizzle-orm": "^0.45.1",
-    "nuxt": "^4.3.1",
+    "nuxt": "^4.4.2",
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@nuxt/eslint": "^1.15.1",
+    "@nuxt/eslint": "^1.15.2",
     "@types/better-sqlite3": "^7.6.13",
-    "@types/node": "^25.3.0",
-    "drizzle-kit": "^0.31.9",
-    "eslint": "^10.0.0",
+    "@types/node": "^25.5.0",
+    "drizzle-kit": "^0.31.10",
+    "eslint": "^10.0.3",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
-    "vue-tsc": "^3.2.4"
+    "vue-tsc": "^3.2.6"
   }
 }

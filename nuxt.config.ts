@@ -20,6 +20,7 @@ export default defineNuxtConfig({
     adminEmail: process.env.NUXT_ADMIN_EMAIL || '',
     adminPassword: process.env.NUXT_ADMIN_PASSWORD || '',
     dbFilePath: process.env.NUXT_DB_FILE_PATH || './data/app.db',
+    photosDir: process.env.NUXT_PHOTOS_DIR || './public/session1',
     sessionMaxAgeSeconds: process.env.NUXT_SESSION_MAX_AGE_SECONDS || '604800',
     public: {
       appName: 'Школьный фотоальбом'
@@ -30,7 +31,7 @@ export default defineNuxtConfig({
     '/': { prerender: true }
   },
 
-  compatibilityDate: '2025-01-15',
+  compatibilityDate: '2025-03-19',
 
   eslint: {
     config: {

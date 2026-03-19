@@ -4,17 +4,19 @@ import { eq } from 'drizzle-orm'
 import { normalizeLastName } from '../../shared/photo-selection'
 import { db } from '../db'
 import { studentPhotoOptions } from '../db/schema'
+import { getSessionPhotosDir } from './media-paths'
 
 const PHOTO_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp'])
-const SESSION_FOLDER = path.resolve(process.cwd(), 'public/session1')
 
 export async function syncStudentPhotoOptionsFromFolders(targetLastName?: string) {
-  if (!fs.existsSync(SESSION_FOLDER)) {
+  const sessionFolder = getSessionPhotosDir()
+
+  if (!sessionFolder || !fs.existsSync(sessionFolder)) {
     return
   }
 
   const targetNormalizedLastName = targetLastName ? normalizeLastName(targetLastName) : ''
-  const folders = fs.readdirSync(SESSION_FOLDER, { withFileTypes: true }).filter(entry => entry.isDirectory())
+  const folders = fs.readdirSync(sessionFolder, { withFileTypes: true }).filter(entry => entry.isDirectory())
   const processedLastNames = new Set<string>()
 
   for (const folder of folders) {
@@ -26,7 +28,7 @@ export async function syncStudentPhotoOptionsFromFolders(targetLastName?: string
 
     processedLastNames.add(normalizedLastName)
 
-    const folderPath = path.join(SESSION_FOLDER, folder.name)
+    const folderPath = path.join(sessionFolder, folder.name)
     const files = fs.readdirSync(folderPath, { withFileTypes: true })
       .filter(entry => entry.isFile())
       .map(entry => entry.name)
@@ -44,7 +46,7 @@ export async function syncStudentPhotoOptionsFromFolders(targetLastName?: string
         lastName: folder.name.normalize('NFC'),
         normalizedLastName,
         fileName,
-        imagePath: `/session1/${encodeURIComponent(folder.name)}/${encodeURIComponent(fileName)}`,
+        imagePath: `/media/session1/${encodeURIComponent(folder.name)}/${encodeURIComponent(fileName)}`,
         createdAt: Date.now()
       }))
     )
