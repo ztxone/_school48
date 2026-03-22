@@ -30,6 +30,7 @@ export const adminSessions = sqliteTable('admin_sessions', {
     .notNull()
     .references(() => admins.id, { onDelete: 'cascade' }),
   token: text('token').notNull().unique(),
+  tableState: text('table_state').notNull().default('{}'),
   expiresAt: integer('expires_at').notNull(),
   createdAt: integer('created_at').notNull()
 })

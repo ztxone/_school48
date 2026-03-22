@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
   if (!parsed.success) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Введите фамилию'
+      message: 'Введите фамилию'
     })
   }
 

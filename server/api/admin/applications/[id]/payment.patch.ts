@@ -15,12 +15,12 @@ export default defineEventHandler(async (event) => {
   const id = Number(getRouterParam(event, 'id'))
 
   if (!id) {
-    throw createError({ statusCode: 400, statusMessage: 'Некорректный идентификатор' })
+    throw createError({ statusCode: 400, message: 'Некорректный идентификатор' })
   }
 
   const parsed = schema.safeParse(await readBody(event))
   if (!parsed.success) {
-    throw createError({ statusCode: 400, statusMessage: 'Некорректные данные оплаты' })
+    throw createError({ statusCode: 400, message: 'Некорректные данные оплаты' })
   }
 
   const now = Date.now()

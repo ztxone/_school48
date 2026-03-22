@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
   if (!photosDir) {
     throw createError({
       statusCode: 404,
-      statusMessage: 'Папка с фотографиями не найдена'
+      message: 'Папка с фотографиями не найдена'
     })
   }
 
@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
   if (!segments.length) {
     throw createError({
       statusCode: 404,
-      statusMessage: 'Файл не найден'
+      message: 'Файл не найден'
     })
   }
 
@@ -38,7 +38,7 @@ export default defineEventHandler(async (event) => {
   if (!filePath.startsWith(normalizedPhotosDir)) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Некорректный путь к файлу'
+      message: 'Некорректный путь к файлу'
     })
   }
 
@@ -55,7 +55,7 @@ export default defineEventHandler(async (event) => {
     if (!mimeType) {
       throw createError({
         statusCode: 415,
-        statusMessage: 'Неподдерживаемый тип файла'
+        message: 'Неподдерживаемый тип файла'
       })
     }
 
@@ -70,7 +70,7 @@ export default defineEventHandler(async (event) => {
 
     throw createError({
       statusCode: 404,
-      statusMessage: 'Файл не найден'
+      message: 'Файл не найден'
     })
   }
 })

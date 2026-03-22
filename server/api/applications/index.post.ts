@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
   if (!parsed.success) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Проверьте корректность полей формы'
+      message: 'Проверьте корректность полей формы'
     })
   }
 
@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
   if (!selectedAlbum) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Неверный формат альбома'
+      message: 'Неверный формат альбома'
     })
   }
 
@@ -63,7 +63,7 @@ export default defineEventHandler(async (event) => {
   if (!result[0]) {
     throw createError({
       statusCode: 500,
-      statusMessage: 'Не удалось сохранить заявку'
+      message: 'Не удалось сохранить заявку'
     })
   }
 

@@ -18,7 +18,7 @@ type LookupResponse = {
 
 type HttpError = {
   data?: {
-    statusMessage?: string
+    message?: string
   }
 }
 
@@ -242,7 +242,7 @@ async function lookupPhotos() {
     }
   } catch (error: unknown) {
     const maybeError = error as HttpError
-    errorMessage.value = maybeError.data?.statusMessage || 'Не удалось загрузить фотографии'
+    errorMessage.value = maybeError.data?.message || 'Не удалось загрузить фотографии'
   } finally {
     lookupLoading.value = false
   }
@@ -270,7 +270,7 @@ async function submitSelection() {
     successMessage.value = 'Выбор сохранен'
   } catch (error: unknown) {
     const maybeError = error as HttpError
-    errorMessage.value = maybeError.data?.statusMessage || 'Не удалось сохранить выбор'
+    errorMessage.value = maybeError.data?.message || 'Не удалось сохранить выбор'
   } finally {
     submitLoading.value = false
   }

@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
 
   const id = Number(getRouterParam(event, 'id'))
   if (!id) {
-    throw createError({ statusCode: 400, statusMessage: 'Некорректный идентификатор' })
+    throw createError({ statusCode: 400, message: 'Некорректный идентификатор' })
   }
 
   const existing = await db
@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
     .limit(1)
 
   if (!existing[0]) {
-    throw createError({ statusCode: 404, statusMessage: 'Заявка не найдена' })
+    throw createError({ statusCode: 404, message: 'Заявка не найдена' })
   }
 
   await db.delete(applications).where(eq(applications.id, id))

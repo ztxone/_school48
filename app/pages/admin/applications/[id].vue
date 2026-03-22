@@ -30,7 +30,7 @@ const saveError = ref('')
 
 type HttpError = {
   data?: {
-    statusMessage?: string
+    message?: string
   }
 }
 
@@ -66,7 +66,7 @@ async function savePayment() {
     await refresh()
   } catch (error: unknown) {
     const maybeError = error as HttpError
-    saveError.value = maybeError.data?.statusMessage || 'Не удалось сохранить оплату'
+    saveError.value = maybeError.data?.message || 'Не удалось сохранить оплату'
   } finally {
     saveLoading.value = false
   }
@@ -112,8 +112,7 @@ async function savePayment() {
           <UFormField label="Фото оплаты">
             <input type="file" accept="image/jpeg,image/png,image/webp" @change="onFileChange">
           </UFormField>
-          <p class="text-sm text-muted">
-            Дата оплаты: {{ data.paidAt ? new Date(data.paidAt).toLocaleString('ru-RU') : '—' }}
+          <p class="text-sm text-muted"> Дата оплаты: {{ data.paidAt ? new Date(data.paidAt).toLocaleString('ru-RU') : '—' }}
           </p>
           <img v-if="paymentState.imagePath" :src="paymentState.imagePath" alt="Чек оплаты" class="rounded-md max-h-52 object-contain bg-neutral-50 dark:bg-neutral-900">
           <UButton :loading="saveLoading" @click="savePayment"> Сохранить </UButton>

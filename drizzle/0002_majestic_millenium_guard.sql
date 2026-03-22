@@ -1,0 +1,1 @@
+ALTER TABLE `admin_sessions` ADD `table_state` text DEFAULT '{}' NOT NULL;

@@ -47,3 +47,20 @@ export const adminLoginSchema = z.object({
   email: z.string().email('Введите корректный email'),
   password: z.string().min(6, 'Минимум 6 символов')
 })
+
+export const adminTableStateSchema = z.object({
+  visibleColumns: z.object({
+    id: z.boolean().optional(),
+    coverSort: z.boolean().optional(),
+    student: z.boolean().optional(),
+    photoSelection: z.boolean().optional(),
+    album: z.boolean().optional(),
+    price: z.boolean().optional(),
+    paymentStatus: z.boolean().optional(),
+    paidAt: z.boolean().optional(),
+    createdAt: z.boolean().optional(),
+    actions: z.boolean().optional()
+  }).strict()
+})
+
+export type AdminTableState = z.infer<typeof adminTableStateSchema>

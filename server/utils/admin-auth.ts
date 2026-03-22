@@ -43,13 +43,15 @@ export async function clearAdminSession(event: H3Event) {
 export async function requireAdmin(event: H3Event) {
   const token = getCookie(event, SESSION_COOKIE)
   if (!token) {
-    throw createError({ statusCode: 401, statusMessage: 'Требуется авторизация' })
+    throw createError({ statusCode: 401, message: 'Требуется авторизация' })
   }
 
   const rows = await db
     .select({
+      sessionId: adminSessions.id,
       adminId: adminSessions.adminId,
-      email: admins.email
+      email: admins.email,
+      tableState: adminSessions.tableState
     })
     .from(adminSessions)
     .innerJoin(admins, eq(admins.id, adminSessions.adminId))
@@ -57,7 +59,7 @@ export async function requireAdmin(event: H3Event) {
     .limit(1)
 
   if (!rows[0]) {
-    throw createError({ statusCode: 401, statusMessage: 'Сессия истекла' })
+    throw createError({ statusCode: 401, message: 'Сессия истекла' })
   }
 
   return rows[0]

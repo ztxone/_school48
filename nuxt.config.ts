@@ -26,12 +26,17 @@ export default defineNuxtConfig({
       appName: 'Школьный фотоальбом'
     }
   },
-
+  vite: {
+    optimizeDeps: {
+      include: [
+        '@fancyapps/ui/dist/fancybox/fancybox.js',
+      ]
+    }
+  },
   routeRules: {
     '/': { prerender: true }
   },
 
-  compatibilityDate: '2025-03-19',
 
   eslint: {
     config: {
@@ -40,5 +45,6 @@ export default defineNuxtConfig({
         braceStyle: '1tbs'
       }
     }
-  }
+  },
+  compatibilityDate: '2025-03-19'
 })

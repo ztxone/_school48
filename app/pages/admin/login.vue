@@ -13,7 +13,7 @@ const errorMessage = ref('')
 
 type HttpError = {
   data?: {
-    statusMessage?: string
+    message?: string
   }
 }
 
@@ -30,64 +30,27 @@ async function submit() {
     await navigateTo('/admin')
   } catch (error: unknown) {
     const maybeError = error as HttpError
-    errorMessage.value = maybeError.data?.statusMessage || 'Не удалось войти'
+    errorMessage.value = maybeError.data?.message || 'Не удалось войти'
   } finally {
     loading.value = false
   }
 }
 </script>
-
 <template>
   <UContainer class="py-16 max-w-md">
     <UCard>
       <template #header>
-        <h1 class="text-xl font-semibold">
-          Вход администратора
-        </h1>
+        <h1 class="text-xl font-semibold"> Вход администратора </h1>
       </template>
-
-      <form
-        class="space-y-4"
-        @submit.prevent="submit"
-      >
-        <UFormField
-          label="Email"
-          name="email"
-        >
-          <UInput
-            v-model="state.email"
-            type="email"
-            required
-            class="w-full"
-          />
+      <form class="space-y-4" @submit.prevent="submit">
+        <UFormField label="Email" name="email">
+          <UInput v-model="state.email" type="email" required class="w-full" />
         </UFormField>
-
-        <UFormField
-          label="Пароль"
-          name="password"
-        >
-          <UInput
-            v-model="state.password"
-            type="password"
-            required
-            class="w-full"
-          />
+        <UFormField label="Пароль" name="password">
+          <UInput v-model="state.password" type="password" required class="w-full" />
         </UFormField>
-
-        <UAlert
-          v-if="errorMessage"
-          color="error"
-          variant="subtle"
-          :title="errorMessage"
-        />
-
-        <UButton
-          type="submit"
-          block
-          :loading="loading"
-        >
-          Войти
-        </UButton>
+        <UAlert v-if="errorMessage" color="error" variant="subtle" :title="errorMessage" />
+        <UButton type="submit" block :loading="loading"> Войти </UButton>
       </form>
     </UCard>
   </UContainer>

@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
     if (!parsed.success) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'Неверные данные для входа'
+        message: 'Неверные данные для входа'
       })
     }
 
@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
     if (!admin) {
       throw createError({
         statusCode: 401,
-        statusMessage: 'Неверный email или пароль'
+        message: 'Неверный email или пароль'
       })
     }
 
@@ -42,6 +42,6 @@ export default defineEventHandler(async (event) => {
 
   throw createError({
     statusCode: 404,
-    statusMessage: 'Не найдено'
+    message: 'Не найдено'
   })
 })

@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   const id = Number(getRouterParam(event, 'id'))
 
   if (!id) {
-    throw createError({ statusCode: 400, statusMessage: 'Некорректный идентификатор' })
+    throw createError({ statusCode: 400, message: 'Некорректный идентификатор' })
   }
 
   const rows = await db
@@ -34,7 +34,7 @@ export default defineEventHandler(async (event) => {
     .limit(1)
 
   if (!rows[0]) {
-    throw createError({ statusCode: 404, statusMessage: 'Заявка не найдена' })
+    throw createError({ statusCode: 404, message: 'Заявка не найдена' })
   }
 
   const application = rows[0]

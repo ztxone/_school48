@@ -11,7 +11,7 @@ type Student = {
 
 type HttpError = {
   data?: {
-    statusMessage?: string
+    message?: string
   }
 }
 
@@ -190,7 +190,7 @@ async function submit() {
     const maybeError = error as HttpError
     submitStatus.value = 'error'
     statusTitle.value = 'Ошибка отправки'
-    statusDescription.value = maybeError.data?.statusMessage || 'Не удалось отправить заявку'
+    statusDescription.value = maybeError.data?.message || 'Не удалось отправить заявку'
     statusModalOpen.value = true
   } finally {
     loading.value = false

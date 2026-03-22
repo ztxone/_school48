@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
   if (!parsed.success) {
     throw createError({
       statusCode: 400,
-      statusMessage: parsed.error.issues[0]?.message || 'Проверьте корректность полей формы'
+      message: parsed.error.issues[0]?.message || 'Проверьте корректность полей формы'
     })
   }
 
@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
   if (!availableOptions.length) {
     throw createError({
       statusCode: 404,
-      statusMessage: 'Для этой фамилии фотографии не найдены'
+      message: 'Для этой фамилии фотографии не найдены'
     })
   }
 
@@ -35,7 +35,7 @@ export default defineEventHandler(async (event) => {
   if (!allowedFiles.has(form.coverPhoto) || !allowedFiles.has(form.vignettePhoto)) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Выбранные фотографии не соответствуют указанной фамилии'
+      message: 'Выбранные фотографии не соответствуют указанной фамилии'
     })
   }
 

@@ -24,6 +24,7 @@
     "better-sqlite3": "^12.8.0",
     "drizzle-orm": "^0.45.1",
     "nuxt": "^4.4.2",
+    "pdfmake": "^0.3.7",
     "zod": "^4.3.6"
   },
   "devDependencies": {
