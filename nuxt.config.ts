@@ -30,6 +30,8 @@ export default defineNuxtConfig({
     optimizeDeps: {
       include: [
         '@fancyapps/ui/dist/fancybox/fancybox.js',
+        '@vue/devtools-core',
+        '@vue/devtools-kit',
       ]
     }
   },

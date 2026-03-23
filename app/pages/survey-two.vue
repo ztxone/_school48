@@ -3,11 +3,11 @@
 
 </script>
 <template>
-  <UContainer class="py-10">
-    <div class="p-6 md:p-10 bg-white rounded-lg shadow-sm">
-      <h1 class="text-2xl font-bold">Выбор фото на обложку и виньетку</h1>
-      <p class="text-muted mt-2 mb-8"> Введите фамилию, просмотрите доступные фотографии и выберите по одной для обложки и виньетки. </p>
-      <Wizard2 />
+  <UContainer class="h-screen flex items-center justify-center">
+    <div class="p-10 text-center bg-white rounded-lg shadow-sm">
+      <h1 class="text-2xl font-bold">Опрос по выбору фото на обложку и виньетку закончен</h1>
+      <p class="text-muted mb-10">Спасибо за ваше участие!</p>
+      <!-- <NuxtLink to="/survey-two" class="inline-block px-4 py-2 bg-primary text-white rounded-lg">Перейти к следующему шагу</NuxtLink> -->
     </div>
   </UContainer>
 </template>
